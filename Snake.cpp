@@ -79,8 +79,11 @@ void Snake::SpawnFood()
 
 void Snake::Update()
 {
+	int x, y;
 	if (snakeSpeed >= updateFreq)
 	{
+		x = snake[0]->GetPosition().X;
+		y = snake[0]->GetPosition().Y;
 		snakeSpeed = 0;
 		for (int i = length-1; i > 0; i--)
 		{
@@ -89,18 +92,35 @@ void Snake::Update()
 		switch (direction)
 		{
 		case 0: // up
-			snake[0]->SetPosition(snake[0]->GetPosition().X, snake[0]->GetPosition().Y - speed);
+			snake[0]->SetPosition(x, y - speed);
 			break;
 		case 1: // left
-			snake[0]->SetPosition(snake[0]->GetPosition().X - speed, snake[0]->GetPosition().Y);
+			snake[0]->SetPosition(x - speed, y);
 			break;
 		case 2: // down
-			snake[0]->SetPosition(snake[0]->GetPosition().X, snake[0]->GetPosition().Y + speed);
+			snake[0]->SetPosition(x, y + speed);
 			break;
 		case 3: // right
-			snake[0]->SetPosition(snake[0]->GetPosition().X + speed, snake[0]->GetPosition().Y);
+			snake[0]->SetPosition(x + speed, y);
 			break;
 		}
+		if (x < 20 && direction == 1)
+		{
+			snake[0]->SetPosition(winX-20, y);
+		}
+		if (x > winX-21 && direction == 3)
+		{
+			snake[0]->SetPosition(0, y);
+		}
+		if (y < 20 && direction == 0)
+		{
+			snake[0]->SetPosition(x, winY-20);
+		}
+		if (y > winY-21 && direction == 2)
+		{
+			snake[0]->SetPosition(x, 0);
+		}
+
 		FoodCollision();
 		SnakeCollision();
 	}
