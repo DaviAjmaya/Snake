@@ -20,6 +20,9 @@ void GetInput(int key, int x, int y)
 	case GLUT_KEY_RIGHT: // rotate right 
 		s->Rotate(1);
 		break;
+	case GLUT_KEY_DOWN:
+		s->AddBody();
+		break;
 	}
 }
 int _tmain(int argc, char** argv)

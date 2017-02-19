@@ -20,8 +20,9 @@ Snake::~Snake()
 {
 	for (int i = 1; i < length; i++)
 	{
-		delete snake[i];
+		delete[]snake[i];
 	}
+	delete[] snake;
 }
 
 void Snake::Update()
@@ -84,7 +85,18 @@ void Snake::Draw()
 
 void Snake::AddBody()
 {
-
+	length += 1;
+	Body **tmp = new Body*[length];
+	tmp[0] = snake[0];
+	tmp[1] = new Body(snake[1]->GetPosition().X, snake[1]->GetPosition().Y);
+	for (int i = 2; i < length-1; i++)
+	{
+		tmp[i] = snake[i-1];
+	}
+	tmp[length - 1] = snake[length - 2];
+	delete snake;
+	snake = tmp;
+	updateFreq *= 0.99;
 }
 
 void Snake::SetSpeed(float s)
