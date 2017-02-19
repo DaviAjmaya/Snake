@@ -41,7 +41,7 @@ int _tmain(int argc, char** argv)
 	GraphInit();
 	glutDisplayFunc(display);
 	glutTimerFunc(33, timerCB, 33);
-	glutSpecialUpFunc(GetInput);
+	glutSpecialFunc(GetInput);
 	glutMainLoop();
     return 0;
 }
