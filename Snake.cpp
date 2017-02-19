@@ -1,18 +1,21 @@
 #include "Snake.h"
 
-
-
 Snake::Snake(int posX, int posY)
 {
+    srand(time(NULL));
+	winX = posX;
+	winY = posY;
 	length = 3;
 	snake = new Body*[length];
-	snake[0] = new Body(posX, posY);
-	snake[1] = new Body(posX-20, posY);
-	snake[2] = new Body(posX - 40, posY);
+	snake[0] = new Body(winX/2, winY/2);
+	snake[1] = new Body(winX/2 -20, winY/2);
+	snake[2] = new Body(winX/2 - 40, winY/2);
 	speed = 20.0f;
 	direction = 3;
 	updateFreq = 4;
 	snakeSpeed = 0;
+	finished = false;
+	SpawnFood();
 }
 
 
@@ -23,6 +26,55 @@ Snake::~Snake()
 		delete[]snake[i];
 	}
 	delete[] snake;
+}
+
+void Snake::NewGame(int posX, int posY) 
+{
+	delete snake;
+	winX = posX;
+	winY = posY;
+	length = 3;
+	snake = new Body*[length];
+	snake[0] = new Body(winX / 2, winY / 2);
+	snake[1] = new Body(winX / 2 - 20, winY / 2);
+	snake[2] = new Body(winX / 2 - 40, winY / 2);
+	speed = 20.0f;
+	direction = 3;
+	updateFreq = 4;
+	snakeSpeed = 0;
+	finished = false;
+	SpawnFood();
+}
+
+void Snake::SpawnFood()
+{
+	bool spawned = false;
+	int x, y;
+	while (!spawned)
+	{
+		spawned = true;
+		// Get random pos for food
+		x = rand() % (winX - 40) / 20;
+		y = rand() % (winY - 40) / 20;
+		
+		// Make sure food doesn't spawn on the snake
+		for (int i = 0; i < length; i++)
+		{
+			if (CheckCollision(snake[0]->GetPosition().X, snake[0]->GetPosition().Y, x, y))
+			{
+				spawned = false;
+				break;
+			}
+		}
+	}
+	if (food == nullptr)
+	{
+		food = new Food(x*20+10, y*20+10);
+	}
+	else
+	{
+		food->SetPosition(x*20+10, y*20+10);
+	}
 }
 
 void Snake::Update()
@@ -49,9 +101,44 @@ void Snake::Update()
 			snake[0]->SetPosition(snake[0]->GetPosition().X + speed, snake[0]->GetPosition().Y);
 			break;
 		}
+		FoodCollision();
+		SnakeCollision();
 	}
 
 	snakeSpeed += 1;
+}
+void Snake::FoodCollision()
+{
+	// Food collision
+	if (CheckCollision(snake[0]->GetPosition().X, snake[0]->GetPosition().Y, food->GetPosition().X, food->GetPosition().Y))
+	{
+		SpawnFood();
+		AddBody();
+	}
+}
+
+void Snake::SnakeCollision()
+{
+	// If head collides with body/tail
+	for (int i = 1; i < length; i++)
+	{
+		if (CheckCollision(snake[0]->GetPosition().X, snake[0]->GetPosition().Y, snake[i]->GetPosition().X, snake[i]->GetPosition().Y))
+		{
+			finished = true;
+		}
+	}
+
+}
+
+bool Snake::CheckCollision(int x1, int y1, int x2, int y2)
+{
+	// Collision x-axis
+	bool collX = x1 + 10 >= x2  && x2 + 5 >= x1;
+
+	// Collision y-axis
+	bool collY = y1 + 10 >= y2 && y2 + 5 >= y1;
+	// Collision only if on both axes
+	return collX && collY;
 }
 
 void Snake::Rotate(int dir)
@@ -81,6 +168,7 @@ void Snake::Draw()
 	{
 		snake[i]->Draw();
 	}
+	food->Draw();
 }
 
 void Snake::AddBody()

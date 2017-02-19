@@ -1,5 +1,6 @@
 #pragma once
 #include "Structs.h"
+
 class Shape
 {
 public:

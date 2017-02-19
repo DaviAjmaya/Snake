@@ -79,6 +79,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Body.h" />
+    <ClInclude Include="Food.h" />
     <ClInclude Include="Graphix.h" />
     <ClInclude Include="Shape.h" />
     <ClInclude Include="Snake.h" />
@@ -88,6 +89,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Body.cpp" />
+    <ClCompile Include="Food.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="Graphix.cpp" />
     <ClCompile Include="Shape.cpp" />

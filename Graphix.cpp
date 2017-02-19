@@ -2,14 +2,6 @@
 #include <math.h>
 #include "Graphix.h"
 
-void DrawLine(int x1, int y1, int x2, int y2 )
-{
-    glBegin(GL_LINES);
-        glVertex3f(x1, y1, 0.0);
-        glVertex3f(x2, y2, 0.0);
-    glEnd();    
-}
-
 void DrawRectanle(int x, int y, int width, int height )
 {
 	glBegin(GL_LINE_LOOP);

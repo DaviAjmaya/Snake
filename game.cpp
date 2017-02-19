@@ -5,6 +5,7 @@
 #include "Graphix.h"
 #include "Snake.h"
 
+static bool finished = false;
 Snake *s;
 int windowSizeX = 800, windowSizeY = 600;
 int input = 3;
@@ -20,14 +21,14 @@ void GetInput(int key, int x, int y)
 	case GLUT_KEY_RIGHT: // rotate right 
 		s->Rotate(1);
 		break;
-	case GLUT_KEY_DOWN:
-		s->AddBody();
+	case GLUT_KEY_F1: // Restart game
+		s->NewGame(windowSizeX, windowSizeY);
 		break;
 	}
 }
 int _tmain(int argc, char** argv)
 {
-	s = new Snake(windowSizeX / 2, windowSizeY / 2);
+	s = new Snake(windowSizeX, windowSizeY);
 
 	// initialize glut
 	glutInit(&argc, argv);
@@ -47,8 +48,11 @@ int _tmain(int argc, char** argv)
 
 void Draw()
 {
+	if (!s->finished) // Update as long as game is not finished
+	{
+		s->Update();
+	}
 	s->Draw();
-	s->Update();
 	Redraw();
 }
 
