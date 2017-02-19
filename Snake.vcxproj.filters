@@ -16,7 +16,7 @@
     <ClCompile Include="Body.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="Head.cpp">
+    <ClCompile Include="Snake.cpp">
       <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>
@@ -39,7 +39,7 @@
     <ClInclude Include="Body.h">
       <Filter>Header</Filter>
     </ClInclude>
-    <ClInclude Include="Head.h">
+    <ClInclude Include="Snake.h">
       <Filter>Header</Filter>
     </ClInclude>
   </ItemGroup>

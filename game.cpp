@@ -3,43 +3,49 @@
 #include <math.h>
 #include <time.h> 
 #include "Graphix.h"
-#include "Head.h"
+#include "Snake.h"
 
-Head *h;
+Snake *s;
 int windowSizeX = 800, windowSizeY = 600;
+int input = 3;
 
+// Get user input for movement
 void GetInput(int key, int x, int y)
 {
 	switch (key)
 	{
-	case GLUT_KEY_LEFT:
-		h->Rotate(0);
+	case GLUT_KEY_LEFT: // rotate left
+		s->Rotate(0);
 		break;
-	case GLUT_KEY_RIGHT:
-		h->Rotate(1);
+	case GLUT_KEY_RIGHT: // rotate right 
+		s->Rotate(1);
 		break;
 	}
 }
 int _tmain(int argc, char** argv)
 {
-	h = new Head(windowSizeX / 2, windowSizeY / 2);
+	s = new Snake(windowSizeX / 2, windowSizeY / 2);
+
+	// initialize glut
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
 	glutInitWindowSize(windowSizeX, windowSizeY);
-	glutInitWindowPosition(100, 100);
+	glutInitWindowPosition(100, 4);
 	glutCreateWindow("Snake");
+
+	// initialize graphics 
 	GraphInit();
 	glutDisplayFunc(display);
 	glutTimerFunc(33, timerCB, 33);
-	glutSpecialFunc(GetInput);
+	glutSpecialUpFunc(GetInput);
 	glutMainLoop();
     return 0;
 }
 
 void Draw()
 {
-	h->Draw();
-	h->Update();
+	s->Draw();
+	s->Update();
 	Redraw();
 }
 

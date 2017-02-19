@@ -80,8 +80,8 @@
   <ItemGroup>
     <ClInclude Include="Body.h" />
     <ClInclude Include="Graphix.h" />
-    <ClInclude Include="Head.h" />
     <ClInclude Include="Shape.h" />
+    <ClInclude Include="Snake.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Structs.h" />
     <ClInclude Include="targetver.h" />
@@ -90,8 +90,8 @@
     <ClCompile Include="Body.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="Graphix.cpp" />
-    <ClCompile Include="Head.cpp" />
     <ClCompile Include="Shape.cpp" />
+    <ClCompile Include="Snake.cpp" />
     <ClCompile Include="stdafx.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
